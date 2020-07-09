@@ -45,7 +45,7 @@
       <div class="col-lg-4" :class="{'text-right': isRTL}">
         <card>
   <form>
-      <card style="nav-tabs" class="text-center">
+      <card style="nav-tabs" class="text-center my-7 py-2">
   <div slot="header" class="card-header-primary">
     Speaker List
   </div>
@@ -61,21 +61,44 @@
       </div>
       
       <div class="col-lg-4" :class="{'text-right': isRTL}">
-        <card>
+        <card class="my-7">
           <form>
             <base-button type="Info">Refresh</base-button>
             <card style="nav-tabs" class="text-center">
                 <div slot="header" class="card-header-primary">
-                  Message from member state: 
+                  Message from member state: Chile
                 </div>
-                <span>  </span>
+                <span> What do you think about resolution 2048? </span>
               </card>    
               <v-divider />
             <card>
               <div class>
                 <div class>
-                  <base-button v-on:click="lv" type="success" native-type="button">Send</base-button>                
-                    <base-button type="danger">Rejected</base-button>
+                  <base-button type="success" native-type="button">Approve</base-button>                
+                    <base-button type="danger">Reject</base-button>
+                  </div>
+                </div>
+            </card>
+          </form>
+        </card> 
+      </div>
+
+
+      <div class=" col-lg-4" :class="{'text-right': isRTL}" >
+        <card class="my-7 py-3">
+          <form>
+            <card style="nav-tabs" class="text-center">
+                <div slot="header" class="card-header-primary">
+                  <blockquote class="blockquote text-center">
+                     <p class="mb-0"> Time remaining {{timerCount}}</p>
+                    </blockquote>
+                </div>
+              </card>    
+              <v-divider />
+            <card class="rounded-xl ml-16 mr-16 mb-16 px-7">
+              <div class>
+                <div class>
+                    <base-button  v-on:click="triggertimer" type="warning">Active Stopwatch</base-button>
                   </div>
                 </div>
             </card>
@@ -86,10 +109,15 @@
       <card>
         <ul class="list-group">
   <li class="list-group-item active">Speaker list</li>
-  <li class="list-group-item, text-danger">Rusia</li>
-  <li class="list-group-item, text-danger">Mexico</li>
-  <li class="list-group-item, text-danger">United States</li>
-  <li class="list-group-item, text-danger">United kingdom</li>
+  <blockquote class="blockquote">
+  <p class="mb-0"><blockquote class="blockquote text-center">Rusia </blockquote> </p>
+</blockquote>
+<blockquote class="blockquote">
+  <p class="mb-0"><blockquote class="blockquote text-center">Mexico </blockquote> </p>
+</blockquote>
+<blockquote class="blockquote">
+  <p class="mb-0"><blockquote class="blockquote text-center">United States </blockquote> </p>
+</blockquote>
 </ul>
 </card>
     </div>
@@ -159,30 +187,6 @@
     </form>
     
 </card> 
-<div>
-    <button class="btn btn-primary" v-b-toggle.sidebar-no-header>Toggle Sidebar</button>
-    <b-sidebar id="sidebar-no-header" aria-labelledby="sidebar-no-header-title" no-header shadow>
-      <template v-slot:default="{ hide }">
-        <div class="p-3">
-          <h4 id="sidebar-no-header-title">Custom header sidebar</h4>
-          <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
-            in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-          </p>
-          <nav class="mb-3">
-            <b-nav vertical>
-              <b-nav-item active @click="hide">Active</b-nav-item>
-              <b-nav-item href="#link-1" @click="hide">Link</b-nav-item>
-              <b-nav-item href="#link-2" @click="hide">Another Link</b-nav-item>
-            </b-nav>
-          </nav>
-          <b-button variant="primary" block @click="hide">Close Sidebar</b-button>
-        </div>
-      </template>
-    </b-sidebar>
-  </div>
-  
-
   
   <!-- <div v-for="contact in Contactos"
     :key= "contact.Contacto">
@@ -223,11 +227,16 @@
     },
     data() {
       return {
-        selected:"delegación",
-        Contactos: [], 
+        timerCount: "",
+       selected:"delegación",
+        Contactos: [{nombre:"Canada", URL:"https://demos.creative-tim.com/argon-design-system/assets/img/icons/flags/CA.png"},
+        {nombre:"Venezuela", URL:"https://demos.creative-tim.com/argon-design-system/assets/img/icons/flags/VE.png"},
+        {nombre:"United States", URL:"https://demos.creative-tim.com/argon-design-system/assets/img/icons/flags/US.png"},
+        {nombre:"Mexico", URL:"https://demos.creative-tim.com/argon-design-system/assets/img/icons/flags/MX.png"}, 
+        {nombre:"Germany", URL:"https://demos.creative-tim.com/argon-design-system/assets/img/icons/flags/DE.png"}], 
         bigLineChart: {
           allData: [
-            [100, 70, 90, 70, 85, 60, 75, 60, 90, 80, 110, 100],
+            [20, 33, 14, 70, 40, 36, 31, 44, 39, 22, 29, 10],
             [80, 120, 105, 110, 95, 105, 90, 100, 80, 95, 70, 120],
             [60, 80, 65, 130, 80, 105, 90, 130, 70, 115, 60, 130]
           ],
@@ -309,6 +318,23 @@
       }
       
     },
+    watch: {
+
+            timerCount: {
+                handler(value) {
+
+                    if (value > 0) {
+                        setTimeout(() => {
+                            this.timerCount--;
+                        }, 1000);
+                    }
+
+                },
+                immediate: true 
+            }
+
+        }
+    ,
     computed: {
       enableRTL() {
         return this.$route.query.enableRTL;
@@ -321,6 +347,9 @@
       }
     }, 
     methods: {
+      triggertimer (){
+        this.timerCount = 60;
+      },
       log(msg, event) {
       console.log(event.target.tagName, msg);
     },
@@ -364,7 +393,7 @@
             pointRadius: 4,
             data: this.bigLineChart.allData[index]
           }],
-          labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+          labels: ['1st session', '2nd session', '3rd session', '4th session', '5th session', '6th session', '7th session', '8th session', '9th session', '10th session'],
         }
         this.$refs.bigChart.updateGradients(chartData);
         this.bigLineChart.chartData = chartData;

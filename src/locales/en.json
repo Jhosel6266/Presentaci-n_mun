@@ -2,13 +2,11 @@
   "dashboard": {
     "completedTasks": "Completed Tasks",
     "dailySales": "Daily Sales",
-    "performance": "Performance",
+    "performance": "Desempeño general",
     "simpleTable": "Simple Table",
-    "totalShipments": "Total Shipments",
+    "totalShipments": "Participaciones Totales",
     "chartCategories": [
-      "Accounts",
-      "Purchases",
-      "Sessions"
+      "Sesiones"
     ],
     "tasks": "Tasks({count})",
     "today": "Today",
